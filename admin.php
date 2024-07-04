@@ -86,8 +86,8 @@ if (isset($_SESSION['message'])) {
                                 <a href="admin.php?delete=<?php echo $row['ID']; ?>" class="delete-btn" onclick="return confirmDelete();">
                                     <i class="fas fa-trash"></i> Delete
                                 </a>
-                                <a href="updateproduct.php?update=<?php echo $row['ID']; ?>" class="option-btn"><i class="fas fa-edit"></i> Update </a>
-                            </td>
+                                <a href="updateproduct.php" class="option-btn" onclick="showUpdateForm(<?php echo $row['ID']; ?>)"><i class="fas fa-edit"></i> Update </a>
+                                </td>
                         </tr>
                         <?php
                     }
@@ -97,9 +97,6 @@ if (isset($_SESSION['message'])) {
                 ?>
             </tbody>
         </table>
-    </section>
-    <section class="edit-form-container">
-        
     </section>
 </div>
 

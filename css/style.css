@@ -187,7 +187,7 @@ section{
 .add-product-form .box{
    text-transform: none;
    padding:1.2rem 1.4rem;
-   font-size: 1rem;
+   font-size: 1.5rem;
    color:var(--black);
    border-radius: .5rem;
    background-color: var(--white);
@@ -202,14 +202,14 @@ section{
 
 .display-product-table table thead th{
    padding:1rem;
-   font-size: 1rem;
+   font-size: 3rem;
    background-color: var(--black);
    color:var(--white);
 }
 
 .display-product-table table td{
    padding:1rem;
-   font-size: 1rem;
+   font-size: 2rem;
    color:var(--black);
 }
 
@@ -299,7 +299,7 @@ section{
 
 .shopping-cart table thead th{
    padding:1.5rem;
-   font-size: 2rem;
+   font-size: 2.5rem;
    color:var(--white);
    background-color: var(--black);
 }
