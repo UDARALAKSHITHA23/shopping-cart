@@ -9,7 +9,7 @@ if (isset($_POST['add_product'])) {
     $p_price = $_POST['p_price'];
     $p_image = $_FILES['p_image']['name'];
     $p_image_tmp_name = $_FILES['p_image']['tmp_name'];
-    $p_image_folder = 'uploaded_img/'.$p_image;
+    $p_image_folder = 'uploaded_img/' . $p_image;
 
     if (!empty($p_name) && !empty($p_price) && !empty($p_image)) {
         // Insert data into the database
@@ -43,7 +43,7 @@ if (isset($_GET['delete'])) {
 }
 
 if (isset($_SESSION['message'])) {
-    echo '<div class="message"><span>'.$_SESSION['message'].'</span><i class="fas fa-times" onclick="this.parentElement.style.display=\'none\';"></i></div>';
+    echo '<div class="message"><span>' . $_SESSION['message'] . '</span><i class="fas fa-times" onclick="this.parentElement.style.display=\'none\';"></i></div>';
     unset($_SESSION['message']); // Clear message after displaying
 }
 ?>
@@ -60,52 +60,111 @@ if (isset($_SESSION['message'])) {
     </section>
 
     <div class="container">
-    <section class="display-product-table">
-        <table class="table-responsive" id="productTable">
-            <thead>
-                <tr>
-                    <th>Product Image</th>
-                    <th>Product Name</th>
-                    
-                    <th>Product Price</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody class="table-light">
-                <?php
-                $select_product = mysqli_query($conn, "SELECT * FROM `product` WHERE status = 1") or die('Query failed: ' . mysqli_error($conn));
-                if (mysqli_num_rows($select_product) > 0) {
-                    while ($row = mysqli_fetch_assoc($select_product)) {
-                        ?>
-                        <tr>
-                        <td><img src="uploaded_img/<?php echo $row['image']; ?>" height='100'></td>
-                            <td><?php echo $row['name']; ?></td>
-                            
-                            <td>$<?php echo $row['price']; ?>/=</td>
-                            <td>
-                                <a href="admin.php?delete=<?php echo $row['ID']; ?>" class="delete-btn" onclick="return confirmDelete();">
-                                    <i class="fas fa-trash"></i> Delete
-                                </a>
-                                <a href="updateproduct.php?update=<?php echo $row['ID']; ?>" class="option-btn"><i class="fas fa-edit"></i> Update </a>
-                            </td>
-                        </tr>
-                        <?php
+        <section class="display-product-table">
+            <table class="table-responsive" id="productTable">
+                <thead>
+                    <tr>
+                        <th>Product Image</th>
+                        <th>Product Name</th>
+
+                        <th>Product Price</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody class="table-light">
+                    <?php
+                    $select_product = mysqli_query($conn, "SELECT * FROM `product` WHERE status = 1") or die('Query failed: ' . mysqli_error($conn));
+                    if (mysqli_num_rows($select_product) > 0) {
+                        while ($row = mysqli_fetch_assoc($select_product)) {
+                            ?>
+                            <tr>
+                                <td><img src="uploaded_img/<?php echo $row['image']; ?>" height='100'></td>
+                                <td><?php echo $row['name']; ?></td>
+
+                                <td>$<?php echo $row['price']; ?>/=</td>
+                                <td>
+                                    <a href="admin.php?delete=<?php echo $row['ID']; ?>" class="delete-btn"
+                                        onclick="return confirmDelete();">
+                                        <i class="fas fa-trash"></i> Delete
+                                    </a>
+                                    <a href="updateproduct.php?id=<?php echo $row['ID']; ?>" class="option-btn">
+                                        <i class="fas fa-edit"></i> Update
+                                    </a>
+                                    <!-- Modal Structure -->
+
+                                </td>
+                            </tr>
+                            <?php
+                        }
+                    } else {
+                        echo "<tr><td colspan='4' class='empty'>No Product added</td></tr>";
                     }
-                } else {
-                    echo "<tr><td colspan='4' class='empty'>No Product added</td></tr>";
-                }
-                ?>
-            </tbody>
-        </table>
-    </section>
-    <section class="edit-form-container">
-        
-    </section>
-</div>
+                    ?>
+                </tbody>
+            </table>
+        </section>
+
+    </div>
 
 
-<script>
-$(document).ready( function () {
-    $('.table-responsive').DataTable();
-});
-</script>
+    <script>
+        $(document).ready(function () {
+            $('.table-responsive').DataTable();
+        });
+
+
+        // $(document).ready(function () {
+        //     // Show Update Form in Modal
+        //     $('.edit-btn').click(function () {
+        //         var id = $(this).data('ID');
+        //         $.ajax({
+        //             url: 'updateproduct.php',
+        //             type: 'GET',
+        //             data: { id: id },
+        //             success: function (response) {
+        //                 $('#modal-body').html(response);
+        //                 $('#updateModal').show();
+        //                 loadProductDetails(id);
+        //             },
+        //             error: function (xhr, status, error) {
+        //                 Swal.fire('Error', 'Failed to load form.', 'error');
+        //             }
+        //         });
+        //     });
+
+        //     // Close Modal
+        //     window.onclick = function (event) {
+        //         if (event.target == document.getElementById('updateModal')) {
+        //             closeModal();
+        //         }
+        //     };
+        // });
+        // function loadProductDetails(ID) {
+        //     $.ajax({
+        //         url: 'updateproduct.php',
+        //         type: 'GET',
+        //         data: { id: id, action: 'getCompanyDetails' },
+        //         dataType: 'json',
+        //         success: function (response) {
+        //             if (response.data) {
+        //                 $('#name').val(response.data.name);
+        //                 $('#price').val(response.data.price);
+        //                 $('#image').val(response.data.image);
+        //                 // Handle image field if needed
+        //             } else {
+        //                 Swal.fire('Error', 'Failed to fetch company details.', 'error');
+        //             }
+        //         },
+        //         error: function (xhr, status, error) {
+        //             Swal.fire('Error', 'Failed to fetch company details.', 'error');
+        //         }
+        //     });
+        // }
+
+        // Close the modal when clicking outside of it
+        // window.onclick = function(event) {
+        //     if (event.target == document.getElementById("updateModal")) {
+        //         closeModal();
+        //     }
+        // }
+    </script>
