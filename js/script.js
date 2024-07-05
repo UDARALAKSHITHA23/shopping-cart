@@ -61,3 +61,27 @@ $(document).ready( function () {
     });
 });
 
+function showUpdateForm(id) {
+    var xhttp = new XMLHttpRequest();
+
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("modal-body").innerHTML = this.responseText;
+            document.getElementById("updateModal").style.display = "block";
+        }
+    };
+
+    xhttp.open("GET", "updateproduct.php?id=" + id, true);
+    xhttp.send();
+}
+
+function closeModal() {
+    document.getElementById("updateModal").style.display = "none";
+}
+
+// Close the modal when clicking outside of it
+window.onclick = function(event) {
+    if (event.target == document.getElementById("updateModal")) {
+        closeModal();
+    }
+}
