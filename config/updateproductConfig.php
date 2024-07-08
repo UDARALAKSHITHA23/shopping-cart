@@ -1,9 +1,6 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 require_once '../sql/config.php';
-require_once '../function/updateFunction.php';
+require_once '../function/updateFuntion.php';
 
 if (isset($_GET['action']) && $_GET['action'] == 'getProductDetails' && isset($_GET['id'])) {
     $id = $_GET['id'];
@@ -11,7 +8,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'getProductDetails' && isset($_
     if ($result) {
         echo json_encode([
             "status" => "success",
-            "data" => $result[0]
+            "data" => $result
         ]);
     } else {
         echo json_encode([

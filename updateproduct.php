@@ -3,6 +3,7 @@ include 'header.php';
 include 'compornent/admin_header.php';
 
 $id = isset($_GET['id']) ? $_GET['id'] : 0;
+// echo $id;
 ?>
 <form id="updateForm" data-id="<?php echo htmlspecialchars($id); ?>">
     <div class="row">
@@ -30,6 +31,7 @@ $id = isset($_GET['id']) ? $_GET['id'] : 0;
 
     $(document).ready(function () {
         var id = $('#updateForm').data('id');
+        console.log(id)
         if (id) {
             $.ajax({
                 url: 'config/updateproductConfig.php',
@@ -44,6 +46,7 @@ $id = isset($_GET['id']) ? $_GET['id'] : 0;
                     if (response.status === 'success' && response.data) {
                         $('#name').val(response.data.name);
                         $('#price').val(response.data.price);
+                        $('#image').val(response.data.image);
                         // Handle image loading if needed
                     } else {
                         alert('Failed to fetch product details');
